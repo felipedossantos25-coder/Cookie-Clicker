@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookie Clicker Deluxe</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#4b2c20,#8b5a2b);
+    color:white;
+    text-align:center;
+}
+
+h1{
+    margin-top:20px;
+}
+
+#cookies{
+    font-size:32px;
+    margin:20px;
+}
+
+#cookie{
+    width:250px;
+    cursor:pointer;
+    transition:transform .1s;
+}
+
+#cookie:active{
+    transform:scale(0.9);
+}
+
+.container{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    flex-wrap:wrap;
+}
+
+.shop{
+    background:rgba(255,255,255,0.1);
+    padding:20px;
+    border-radius:15px;
+    width:350px;
+}
+
+.upgrade{
+    display:flex;
+    align-items:center;
+    margin:10px 0;
+    padding:10px;
+    background:rgba(255,255,255,0.1);
+    border-radius:10px;
+}
+
+.upgrade img{
+    width:60px;
+    height:60px;
+    margin-right:10px;
+}
+
+.upgrade button{
+    margin-left:auto;
+    padding:8px 12px;
+    cursor:pointer;
+}
+
+.stats{
+    margin-top:20px;
+    font-size:18px;
+}
+</style>
+</head>
+<body>
+
+<h1>🍪 Cookie Clicker Deluxe</h1>
+
+<div id="cookies">Cookies: 0</div>
+
+<img
+id="cookie"
+src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1g_sCl-lBYU5zD81vBIoB8B9PdQkliH1zvY8pDYkY86XtONeF-sBs5cqm6dXL1Zg91scmz3_QNCfDjTGLtdPJ37k7qy_AxcMnDSR_AqkOLg&s=10"
+alt="Cookie"
+>
+
+<div class="stats">
+    Cookies por clique: <span id="clickPower">1</span><br>
+    Cookies por segundo: <span id="cps">0</span>
+</div>
+
+<br>
+
+<div class="container">
+
+<div class="shop">
+<h2>Loja</h2>
+
+<div class="upgrade">
+<img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png">
+<div>
+<b>Vovó</b><br>
++1 cookie/s<br>
+Possui: <span id="grandmaCount">0</span>
+</div>
+<button onclick="buyGrandma()">
+Comprar (<span id="grandmaCost">25</span>)
+</button>
+</div>
+
+<div class="upgrade">
+<img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png">
+<div>
+<b>Fazenda</b><br>
++5 cookies/s<br>
+Possui: <span id="farmCount">0</span>
+</div>
+<button onclick="buyFarm()">
+Comprar (<span id="farmCost">100</span>)
+</button>
+</div>
+
+<div class="upgrade">
+<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+<div>
+<b>Fábrica</b><br>
++20 cookies/s<br>
+Possui: <span id="factoryCount">0</span>
+</div>
+<button onclick="buyFactory()">
+Comprar (<span id="factoryCost">500</span>)
+</button>
+</div>
+
+<div class="upgrade">
+<img src="https://cdn-icons-png.flaticon.com/512/747/747376.png">
+<div>
+<b>Upgrade de Clique</b><br>
++1 por clique<br>
+Nível: <span id="clickLevel">1</span>
+</div>
+<button onclick="buyClickUpgrade()">
+Comprar (<span id="clickCost">50</span>)
+</button>
+</div>
+
+</div>
+
+</div>
+
+<script>
+let cookies = 0;
+
+let clickPower = 1;
+let cps = 0;
+
+let grandmaCost = 25;
+let farmCost = 100;
+let factoryCost = 500;
+let clickCost = 50;
+
+let grandmaCount = 0;
+let farmCount = 0;
+let factoryCount = 0;
+let clickLevel = 1;
+
+const cookieEl = document.getElementById("cookie");
+
+cookieEl.addEventListener("click", () => {
+    cookies += clickPower;
+    updateUI();
+});
+
+function updateUI(){
+    document.getElementById("cookies").innerText =
+        "Cookies: " + Math.floor(cookies);
+
+    document.getElementById("clickPower").innerText =
+        clickPower;
+
+    document.getElementById("cps").innerText =
+        cps;
+
+    document.getElementById("grandmaCost").innerText =
+        Math.floor(grandmaCost);
+
+    document.getElementById("farmCost").innerText =
+        Math.floor(farmCost);
+
+    document.getElementById("factoryCost").innerText =
+        Math.floor(factoryCost);
+
+    document.getElementById("clickCost").innerText =
+        Math.floor(clickCost);
+
+    document.getElementById("grandmaCount").innerText =
+        grandmaCount;
+
+    document.getElementById("farmCount").innerText =
+        farmCount;
+
+    document.getElementById("factoryCount").innerText =
+        factoryCount;
+
+    document.getElementById("clickLevel").innerText =
+        clickLevel;
+}
+
+function buyGrandma(){
+    if(cookies >= grandmaCost){
+        cookies -= grandmaCost;
+        grandmaCount++;
+        cps += 1;
+        grandmaCost *= 1.25;
+        updateUI();
+    }
+}
+
+function buyFarm(){
+    if(cookies >= farmCost){
+        cookies -= farmCost;
+        farmCount++;
+        cps += 5;
+        farmCost *= 1.35;
+        updateUI();
+    }
+}
+
+function buyFactory(){
+    if(cookies >= factoryCost){
+        cookies -= factoryCost;
+        factoryCount++;
+        cps += 20;
+        factoryCost *= 1.45;
+        updateUI();
+    }
+}
+
+function buyClickUpgrade(){
+    if(cookies >= clickCost){
+        cookies -= clickCost;
+        clickLevel++;
+        clickPower++;
+        clickCost *= 1.8;
+        updateUI();
+    }
+}
+
+setInterval(() => {
+    cookies += cps;
+    updateUI();
+}, 1000);
+
+updateUI();
+</script>
+
+</body>
+</html>
