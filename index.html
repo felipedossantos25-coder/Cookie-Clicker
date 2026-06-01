@@ -2,98 +2,258 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Cookie Clicker Simples</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cookie Clicker Deluxe</title>
+
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        text-align: center;
-        background-color: #f2f2f2;
-        margin: 0;
-        padding: 20px;
-    }
-    #cookie {
-        width: 200px;
-        cursor: pointer;
-        transition: transform 0.1s;
-    }
-    #cookie:active {
-        transform: scale(0.95);
-    }
-    .stats {
-        margin-top: 20px;
-        font-size: 24px;
-    }
-    .upgrades {
-        margin-top: 30px;
-    }
-    .upgrade-button {
-        margin: 10px;
-        padding: 10px 20px;
-        font-size: 18px;
-        cursor: pointer;
-    }
+body{
+    margin:0;
+    font-family:Arial, sans-serif;
+    background:linear-gradient(135deg,#4b2c20,#8b5a2b);
+    color:white;
+    text-align:center;
+}
+
+h1{
+    margin-top:20px;
+}
+
+#cookies{
+    font-size:32px;
+    margin:20px;
+}
+
+#cookie{
+    width:250px;
+    cursor:pointer;
+    transition:transform .1s;
+}
+
+#cookie:active{
+    transform:scale(0.9);
+}
+
+.container{
+    display:flex;
+    justify-content:center;
+    gap:40px;
+    flex-wrap:wrap;
+}
+
+.shop{
+    background:rgba(255,255,255,0.1);
+    padding:20px;
+    border-radius:15px;
+    width:350px;
+}
+
+.upgrade{
+    display:flex;
+    align-items:center;
+    margin:10px 0;
+    padding:10px;
+    background:rgba(255,255,255,0.1);
+    border-radius:10px;
+}
+
+.upgrade img{
+    width:60px;
+    height:60px;
+    margin-right:10px;
+}
+
+.upgrade button{
+    margin-left:auto;
+    padding:8px 12px;
+    cursor:pointer;
+}
+
+.stats{
+    margin-top:20px;
+    font-size:18px;
+}
 </style>
 </head>
 <body>
 
-<h1>🍪 Cookie Clicker</h1>
+<h1>🍪 Cookie Clicker Deluxe</h1>
 
-<img id="cookie" src="data:image/webp;base64,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" alt="Cookie">
+<div id="cookies">Cookies: 0</div>
+
+<img
+id="cookie"
+src="https://cdn-icons-png.flaticon.com/512/1047/1047711.png"
+alt="Cookie"
+>
 
 <div class="stats">
-    <p>Cookies: <span id="cookies">0</span></p>
-    <p>Cookies por clique: <span id="cpc">1</span></p>
+    Cookies por clique: <span id="clickPower">1</span><br>
+    Cookies por segundo: <span id="cps">0</span>
 </div>
 
-<div class="upgrades">
-    <h2>Upgrades</h2>
-    <button class="upgrade-button" id="upgrade1">Forno (+1 CPC) - 10 cookies</button>
-    <button class="upgrade-button" id="upgrade2">Chef (+5 CPC) - 50 cookies</button>
+<br>
+
+<div class="container">
+
+<div class="shop">
+<h2>Loja</h2>
+
+<div class="upgrade">
+<img src="https://cdn-icons-png.flaticon.com/512/3075/3075977.png">
+<div>
+<b>Vovó</b><br>
++1 cookie/s<br>
+Possui: <span id="grandmaCount">0</span>
+</div>
+<button onclick="buyGrandma()">
+Comprar (<span id="grandmaCost">25</span>)
+</button>
+</div>
+
+<div class="upgrade">
+<img src="https://cdn-icons-png.flaticon.com/512/2921/2921822.png">
+<div>
+<b>Fazenda</b><br>
++5 cookies/s<br>
+Possui: <span id="farmCount">0</span>
+</div>
+<button onclick="buyFarm()">
+Comprar (<span id="farmCost">100</span>)
+</button>
+</div>
+
+<div class="upgrade">
+<img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+<div>
+<b>Fábrica</b><br>
++20 cookies/s<br>
+Possui: <span id="factoryCount">0</span>
+</div>
+<button onclick="buyFactory()">
+Comprar (<span id="factoryCost">500</span>)
+</button>
+</div>
+
+<div class="upgrade">
+<img src="https://cdn-icons-png.flaticon.com/512/747/747376.png">
+<div>
+<b>Upgrade de Clique</b><br>
++1 por clique<br>
+Nível: <span id="clickLevel">1</span>
+</div>
+<button onclick="buyClickUpgrade()">
+Comprar (<span id="clickCost">50</span>)
+</button>
+</div>
+
+</div>
+
 </div>
 
 <script>
-    let cookies = 0;
-    let cookiesPerClick = 1;
+let cookies = 0;
 
-    const cookie = document.getElementById('cookie');
-    const cookiesDisplay = document.getElementById('cookies');
-    const cpcDisplay = document.getElementById('cpc');
+let clickPower = 1;
+let cps = 0;
 
-    // Atualiza a exibição de cookies
-    function updateDisplay() {
-        cookiesDisplay.textContent = cookies;
-        cpcDisplay.textContent = cookiesPerClick;
+let grandmaCost = 25;
+let farmCost = 100;
+let factoryCost = 500;
+let clickCost = 50;
+
+let grandmaCount = 0;
+let farmCount = 0;
+let factoryCount = 0;
+let clickLevel = 1;
+
+const cookieEl = document.getElementById("cookie");
+
+cookieEl.addEventListener("click", () => {
+    cookies += clickPower;
+    updateUI();
+});
+
+function updateUI(){
+    document.getElementById("cookies").innerText =
+        "Cookies: " + Math.floor(cookies);
+
+    document.getElementById("clickPower").innerText =
+        clickPower;
+
+    document.getElementById("cps").innerText =
+        cps;
+
+    document.getElementById("grandmaCost").innerText =
+        Math.floor(grandmaCost);
+
+    document.getElementById("farmCost").innerText =
+        Math.floor(farmCost);
+
+    document.getElementById("factoryCost").innerText =
+        Math.floor(factoryCost);
+
+    document.getElementById("clickCost").innerText =
+        Math.floor(clickCost);
+
+    document.getElementById("grandmaCount").innerText =
+        grandmaCount;
+
+    document.getElementById("farmCount").innerText =
+        farmCount;
+
+    document.getElementById("factoryCount").innerText =
+        factoryCount;
+
+    document.getElementById("clickLevel").innerText =
+        clickLevel;
+}
+
+function buyGrandma(){
+    if(cookies >= grandmaCost){
+        cookies -= grandmaCost;
+        grandmaCount++;
+        cps += 1;
+        grandmaCost *= 1.25;
+        updateUI();
     }
+}
 
-    // Clique no cookie
-    cookie.addEventListener('click', () => {
-        cookies += cookiesPerClick;
-        updateDisplay();
-    });
+function buyFarm(){
+    if(cookies >= farmCost){
+        cookies -= farmCost;
+        farmCount++;
+        cps += 5;
+        farmCost *= 1.35;
+        updateUI();
+    }
+}
 
-    // Upgrade 1 - Forno
-    document.getElementById('upgrade1').addEventListener('click', () => {
-        if (cookies >= 10) {
-            cookies -= 10;
-            cookiesPerClick += 1;
-            updateDisplay();
-        } else {
-            alert("Você não tem cookies suficientes!");
-        }
-    });
+function buyFactory(){
+    if(cookies >= factoryCost){
+        cookies -= factoryCost;
+        factoryCount++;
+        cps += 20;
+        factoryCost *= 1.45;
+        updateUI();
+    }
+}
 
-    // Upgrade 2 - Chef
-    document.getElementById('upgrade2').addEventListener('click', () => {
-        if (cookies >= 50) {
-            cookies -= 50;
-            cookiesPerClick += 5;
-            updateDisplay();
-        } else {
-            alert("Você não tem cookies suficientes!");
-        }
-    });
+function buyClickUpgrade(){
+    if(cookies >= clickCost){
+        cookies -= clickCost;
+        clickLevel++;
+        clickPower++;
+        clickCost *= 1.8;
+        updateUI();
+    }
+}
 
-    updateDisplay();
+setInterval(() => {
+    cookies += cps;
+    updateUI();
+}, 1000);
+
+updateUI();
 </script>
 
 </body>
